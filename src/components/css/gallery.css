@@ -1,0 +1,29 @@
+.photo {
+    opacity: 1;
+    transition: 0.5s ease;
+}
+
+.photo-cats-tag {
+    position: absolute;
+    z-index: 999;
+    padding: 5px;
+    right: 16px;
+    bottom: 16px;
+    float: right;
+    opacity: 0.5;
+    transition: 0.5s ease-in-out;
+    transform: translate(-50%, -50%);
+}
+
+.photo-cats-container {
+    position: relative;
+}
+
+.photo-cats-container:hover .photo {
+    cursor: pointer;
+    transform: scale(1.02);
+}
+
+.photo-cats-container:hover .photo-cats-tag {
+    opacity: 1;
+}

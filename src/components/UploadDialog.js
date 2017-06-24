@@ -1,18 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import Image from './Image';
 import "bulma/css/bulma.css"
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
+import firebase from 'firebase'
 const classNames = require('classnames');
-// const cropOptions = {
-    // aspect: 1/1
-// }
 
 class UploadDialog extends Component {
     constructor(props) {
         super();
-        console.log(props)
+        this.storage = firebase.storage()
+        this.database = firebase.database().ref('messages')
         this.state = {
             image: "",
             opened: false
@@ -21,13 +19,13 @@ class UploadDialog extends Component {
         this.handleCloseDialog = this.handleCloseDialog.bind(this)
         this.handleCrop = this.handleCrop.bind(this)
         this.imagesPreview = []
-        this.firebase = new Firebase()
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.images.length > 0) {
+            window.image = nextProps.images[0]
             let fileReader = new FileReader()
-            fileReader.onload = (e) => this.setState({image: e.target.result, opened: nextProps.upload_dialog_opened})
+            fileReader.onload = (e) => this.setState({ image: e.target.result, opened: nextProps.upload_dialog_opened })
             fileReader.readAsDataURL(nextProps.images[0]);
         }
     }
@@ -39,62 +37,64 @@ class UploadDialog extends Component {
         this.props.clearImages();
     }
 
-    handleCrop(){
+    handleCrop() {
         let croppedImage = this.refs.cropper.getCroppedCanvas().toDataURL();
-
-        // TODO: Upload image to firebase here
-        // Create a root reference
-        var storageRef = firebase.storage().ref('images');
-
-        // Create a reference to 'mountains.jpg'
-        var mountainsRef = storageRef.child(`${this.props.images[0].name}.jpg`);
-
-        // Create a reference to 'images/mountains.jpg'
-        var mountainImagesRef = storageRef.child('images/mountains.jpg');
-
-        // While the file names are the same, the references point to different files
-        mountainsRef.name === mountainImagesRef.name            // true
-        mountainsRef.fullPath === mountainImagesRef.fullPath    // false
-        
+        let imageName = this.props.images[0].name;
+        //TODO: Upload image using key
+        this.database.push({tag: 'Any', imageUrl: UploadDialog.LOADING_IMAGE_URL})
+            .then(function(data){
+                console.log(data);
+                return this.storage.ref(`images/${data.key}/${imageName}`).putString(croppedImage,'data_url')
+                           .then(function(snapshot){
+                               let fullPath = snapshot.metadata.fullPath
+                               console.log(this.storage.ref(fullPath).toString())
+                               return data.update({imageUrl: this.storage.ref(fullPath).toString()});
+                           }.bind(this));
+            }.bind(this))
+            .catch(function(error) {
+                console.error('There was an error uploading a file to Cloud Storage:', error);
+            });
         this.handleCloseDialog();
     }
 
     render() {
-         let modalClass = classNames({
+        let modalClass = classNames({
             'modal': true,
             'is-active': this.props.upload_dialog_opened,
-         })
+        })
         return (
-                <div className={modalClass}>
-                    <div className="modal-background"></div>
-                    <div className="modal-content">
-                        <div className="card">
-                            <header className="card-header">
-                                <p className="card-header-title">
-                                    Crop Image
+            <div className={modalClass}>
+                <div className="modal-background"></div>
+                <div className="modal-content">
+                    <div className="card">
+                        <header className="card-header">
+                            <p className="card-header-title">
+                                Crop Image
                                 </p>
-                            </header>
-                            <div className="card-content">
-                                <Cropper
-                                    ref='cropper'
-                                    src={this.state.image}
-                                    style={{height: 400, width: '100%'}}
-                                    // Cropper.js options
-                                    aspectRatio={1}
-                                    guides={true}
-                                    />
-                            </div>
-                            <footer className="card-footer">
-                                <a className="card-footer-item" onClick={this.handleCrop}>Save</a>
-                            </footer>
+                        </header>
+                        <div className="card-content">
+                            <Cropper
+                                ref='cropper'
+                                src={this.state.image}
+                                style={{ height: 400, width: '100%' }}
+                                // Cropper.js options
+                                aspectRatio={1}
+                                guides={true}
+                            />
                         </div>
-                        
+                        <footer className="card-footer">
+                            <a className="card-footer-item" onClick={this.handleCrop}>Save</a>
+                        </footer>
                     </div>
 
-                    <button className="modal-close" onClick={this.handleCloseDialog}></button>
                 </div>
+
+                <button className="modal-close" onClick={this.handleCloseDialog}></button>
+            </div>
         )
     }
 }
+
+UploadDialog.LOADING_IMAGE_URL = "https://api.ripzery.me/loading2-sm.svg"
 
 export default UploadDialog

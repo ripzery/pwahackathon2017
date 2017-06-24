@@ -1,0 +1,55 @@
+[debug] [2017-06-24T15:29:09.337Z] ----------------------------------------------------------------------
+[debug] [2017-06-24T15:29:09.340Z] Command:      /usr/local/bin/node /Users/ripzery/.npm-packages/bin/firebase deploy
+[debug] [2017-06-24T15:29:09.341Z] CLI Version:  3.9.1
+[debug] [2017-06-24T15:29:09.341Z] Platform:     darwin
+[debug] [2017-06-24T15:29:09.341Z] Node Version: v6.4.0
+[debug] [2017-06-24T15:29:09.343Z] Time:         Sat Jun 24 2017 22:29:09 GMT+0700 (+07)
+[debug] [2017-06-24T15:29:09.343Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-06-24T15:29:09.361Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-06-24T15:29:09.361Z] > authorizing via signed-in user
+[debug] [2017-06-24T15:29:09.364Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/pwa-hackathon-2017  
+ Sat Jun 24 2017 22:29:09 GMT+0700 (+07)
+[debug] [2017-06-24T15:29:10.852Z] <<< HTTP RESPONSE 200
+[debug] [2017-06-24T15:29:10.854Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/pwa-hackathon-2017/tokens  
+ Sat Jun 24 2017 22:29:10 GMT+0700 (+07)
+[debug] [2017-06-24T15:29:12.113Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'pwa-hackathon-2017'...
+[info] 
+[info] i  deploying database, functions, hosting
+[info] ✔  database: rules ready to deploy.
+[debug] [2017-06-24T15:29:14.884Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "dependencies": {
+    "@google-cloud/storage": "^1.1.1",
+    "@google-cloud/vision": "^0.11.3",
+    "child-process-promise": "^2.2.1",
+    "firebase-admin": "~4.2.1",
+    "firebase-functions": "^0.5.7",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1"
+  },
+  "private": true
+}
+[info] i  functions: ensuring necessary APIs are enabled...
+[info] i  runtimeconfig: ensuring necessary APIs are enabled...
+[debug] [2017-06-24T15:29:14.889Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/pwa-hackathon-2017?view=CONSUMER_VIEW  
+ Sat Jun 24 2017 22:29:14 GMT+0700 (+07)
+[debug] [2017-06-24T15:29:14.890Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/pwa-hackathon-2017?view=CONSUMER_VIEW  
+ Sat Jun 24 2017 22:29:14 GMT+0700 (+07)
+[debug] [2017-06-24T15:29:16.720Z] <<< HTTP RESPONSE 200
+[info] ✔  runtimeconfig: all necessary APIs are enabled
+[debug] [2017-06-24T15:29:16.799Z] <<< HTTP RESPONSE 200
+[info] ✔  functions: all necessary APIs are enabled
+[debug] [2017-06-24T15:29:16.800Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/pwa-hackathon-2017  
+ Sat Jun 24 2017 22:29:16 GMT+0700 (+07)
+[debug] [2017-06-24T15:29:16.801Z] >>> HTTP REQUEST GET https://apikeys.googleapis.com/v1/projects/pwa-hackathon-2017/apiKeys  
+ Sat Jun 24 2017 22:29:16 GMT+0700 (+07)
+[debug] [2017-06-24T15:29:18.375Z] <<< HTTP RESPONSE 200
+[debug] [2017-06-24T15:29:18.421Z] <<< HTTP RESPONSE 200
+[info] i  functions: preparing functions directory for uploading...
+[debug] [2017-06-24T15:29:26.331Z] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/pwa-hackathon-2017/configs  
+ Sat Jun 24 2017 22:29:26 GMT+0700 (+07)
+[debug] [2017-06-24T15:29:27.061Z] <<< HTTP RESPONSE 200

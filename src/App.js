@@ -1,26 +1,41 @@
-import React, { Component } from 'react';
-import './App.css';
-import Toolbar from './components/Toolbar';
-import Add from './containers/Add';
-import Gallery from './containers/Gallery';
-import UploadDialog from './containers/UploadDialog';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types';
+import 'react-mfb/mfb.css'
+import { Menu, MainButton, ChildButton } from 'react-mfb';
 
-class App extends Component {
-  constructor(params) {
-    super();
-    this.images = ['image1', 'image2', 'image3']
-  }
+const classNames= require('classnames');
+const styles = {
+    hidden : {
+        display: 'none'
+    }
+}
+class Add extends Component {   
+    handleAdd() {
+        document.getElementById('choose-photo').click();
+    }
 
-  render() {
-    return (
-      <div>
-        <Toolbar />
-        <Gallery images={this.images} />
-        <Add />
-        <UploadDialog />
-      </div>
-    );
-  }
+    handleFile(event) {
+        let filesList = Object.keys(event.target.files).map(i => event.target.files[i])
+        console.log(filesList);
+        this.props.addImages(filesList);
+        this.props.toggleDialog();
+    }
+
+    render() {
+        return (
+            <div style={{display: this.props.upload_dialog_opened ? 'none' : 'block'}}>
+                <Menu effect="slidein" method="click" position="br" >
+                    <MainButton iconResting="ion-plus-round" iconActive="ion-close-round" />
+                    <ChildButton icon="ion-images" label="Add photo" onClick={this.handleAdd.bind(this)} />
+                </Menu>
+                <input type='file' accept='image/*' name='select-photo' id='choose-photo' onChange={this.handleFile.bind(this)} style={styles.hidden} />
+            </div>
+        )
+    }
 }
 
-export default App;
+Add.propTypes = {
+
+}
+
+export default Add

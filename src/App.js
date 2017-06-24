@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Toolbar from './components/Toolbar';
+import Add from './containers/Add';
+import Gallery from './containers/Gallery';
+import UploadDialog from './containers/UploadDialog';
 
 class App extends Component {
+  constructor(params) {
+    super();
+    this.images = ['image1', 'image2', 'image3']
+  }
+
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <Toolbar />
+        <Gallery images={this.images} />
+        <Add />
+        <UploadDialog />
       </div>
     );
   }

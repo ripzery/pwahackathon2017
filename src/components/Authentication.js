@@ -58,10 +58,12 @@ class Authentication extends Component {
                 console.log('Got FCM device token:', currentToken)
                 localStorage.setItem('fcm_token', currentToken);
 
-                let fcmTokens =  firebase.database().ref(`fcmTokens/${firebase.auth().currentUser.uid}`).once('value').then((snapshot) => {
+                let fcmTokens =  firebase.database().ref(`fcmTokens/${firebase.auth().currentUser.uid}/tokens`).once('value').then((snapshot) => {
                     let allDeviceTokens = snapshot.val();
                     if(!snapshot.val()){
                         allDeviceTokens = [];   
+                    }else if(allDeviceTokens.indexOf(currentToken) > -1) {
+                        return;
                     }
                     console.log('Received allDeviceTokens', allDeviceTokens)
                     firebase.database().ref(`fcmTokens/${firebase.auth().currentUser.uid}/tokens/`)

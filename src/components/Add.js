@@ -26,7 +26,7 @@ class Add extends Component {
         console.log(this.props.upload_dialog_opened)
         return (
             <div style={{display: this.props.upload_dialog_opened ? 'none' : 'block'}}>
-                <Menu effect="slidein" method="hover" position="br" >
+                <Menu effect="slidein" method="click" position="br" >
                     <MainButton iconResting="ion-plus-round" iconActive="ion-close-round" />
                     <ChildButton icon="ion-images" label="Add photo" onClick={this.handleAdd.bind(this)} />
                 </Menu>

@@ -21,6 +21,7 @@ class UploadDialog extends Component {
         this.handleCloseDialog = this.handleCloseDialog.bind(this)
         this.handleCrop = this.handleCrop.bind(this)
         this.imagesPreview = []
+        this.firebase = new Firebase()
     }
 
     componentWillReceiveProps(nextProps) {
@@ -40,6 +41,21 @@ class UploadDialog extends Component {
 
     handleCrop(){
         let croppedImage = this.refs.cropper.getCroppedCanvas().toDataURL();
+
+        // TODO: Upload image to firebase here
+        // Create a root reference
+        var storageRef = firebase.storage().ref('images');
+
+        // Create a reference to 'mountains.jpg'
+        var mountainsRef = storageRef.child(`${this.props.images[0].name}.jpg`);
+
+        // Create a reference to 'images/mountains.jpg'
+        var mountainImagesRef = storageRef.child('images/mountains.jpg');
+
+        // While the file names are the same, the references point to different files
+        mountainsRef.name === mountainImagesRef.name            // true
+        mountainsRef.fullPath === mountainImagesRef.fullPath    // false
+        
         this.handleCloseDialog();
     }
 

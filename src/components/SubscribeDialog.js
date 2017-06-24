@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase'
 
 const classNames = require('classnames')
-const AUTHORIZATION_KEY = "AIzaSyBOK1MwL7bjZpf5H7AVziI4Dna2zhJd8vo"
+const AUTHORIZATION_KEY = "AIzaSyDXDq8_u6oqNAUWCnTcRzY-0sFDZDZQfXQ"
 class SubscribeDialog extends Component {
     constructor(props) {
         super();
@@ -30,7 +30,7 @@ class SubscribeDialog extends Component {
                     this.database.ref(`subscription/${firebase.auth().currentUser.uid}`).set({
                         tags: [tag]
                     })
-                    throw new Error('User has not been subscribe anything.');
+                    return;
                 }
 
                 let val = snapshot.val()
@@ -44,6 +44,7 @@ class SubscribeDialog extends Component {
                 if (val.tags != null) return val.tags
             })
             .then((tags) => {
+                if(!tags) return
                 console.log('Subscribing '+ tag + '...')
                 firebase.database().ref(`subscription/${firebase.auth().currentUser.uid}`).set({
                     tags: [...tags, tag]

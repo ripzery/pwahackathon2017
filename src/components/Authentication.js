@@ -58,8 +58,28 @@ class Authentication extends Component {
                 console.log('Got FCM device token:', currentToken)
                 localStorage.setItem('fcm_token', currentToken);
 
-                firebase.database().ref('fcmTokens').child(currentToken)
-                    .set(firebase.auth().currentUser.uid)
+                let fcmTokens =  firebase.database().ref(`fcmTokens/${firebase.auth().currentUser.uid}`).once('value').then((snapshot) => {
+                    let allDeviceTokens = snapshot.val();
+                    if(!snapshot.val()){
+                        allDeviceTokens = [];   
+                    }
+                    console.log('Received allDeviceTokens', allDeviceTokens)
+                    firebase.database().ref(`fcmTokens/${firebase.auth().currentUser.uid}/tokens/`)
+                        .set([...allDeviceTokens, currentToken]).then(() => { console.log('Update device token of user', firebase.auth().currentUser.uid) });
+                });
+                    
+
+                // // TODO: read all subscribe topics all resubscribe
+                // console.log('read all tags for subscribe.')
+                // firebase.database().ref(`/subscription/${firbase.auth().currentUser.uid}/tags`).once('value').then((snapshot) =>{
+                //     if(!snapshot || !snapshot.val()) return;
+
+                //     let tags = snapshot.val();
+                //     console.log(tags)
+
+                    
+                    
+                // })
             } else {
                 // Need to request permissions to show notifications.
                 console.log('Requesting notifications permission...')

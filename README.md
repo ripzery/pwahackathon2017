@@ -1,5 +1,6 @@
 # Autocats
-A Web Application that collecting uploaded image from user and auto categorized to each categories using Google Cloud Vision API.
+A Web Application that collecting uploaded image from user and auto categorized using Google Cloud Vision API to detect what kinds of image like dog or cat.
 
 Autocats is heavily make use of Firebase, such as Realtime database, Storage, Authentication, Messaging, and Cloud Function.
 
+User can login to subscribe to each category of the image. When someone has upload the image that related to the category, then cloud function will send notification to everybody who subscribe to it.

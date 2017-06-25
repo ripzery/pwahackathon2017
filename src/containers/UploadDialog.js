@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { addImages, toggleDialog, clearImages } from '../actions'
+import { addImages, toggleDialog, clearImages, showNotification } from '../actions'
 import UploadDialog from '../components/UploadDialog';
 
 const mapStateToProps = (state, ownProps) => {
@@ -19,6 +19,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         clearImages: () => {
             dispatch(clearImages())
+        },
+        showNotification: (message, isError) => {
+            dispatch(showNotification(message, isError))
         }
     };
 };

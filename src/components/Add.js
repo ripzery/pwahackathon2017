@@ -16,6 +16,10 @@ class Add extends Component {
 
     handleFile(event) {
         let filesList = Object.keys(event.target.files).map(i => event.target.files[i])
+        if(filesList[0].size > 4000000){
+            this.props.showNotification('We can\'t process the image that over 4 MB. 😭', true)
+            return;
+        }
         console.log(filesList);
         this.props.addImages(filesList);
         this.props.toggleDialog();

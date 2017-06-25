@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { addImages, toggleDialog } from '../actions'
+import { addImages, toggleDialog, showNotification } from '../actions'
 import Add from '../components/Add';
 
 const mapStateToProps = (state, ownProps) => ({
@@ -13,6 +13,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         toggleDialog: () => {
             dispatch(toggleDialog())
+        },
+        showNotification: (message, isError) => {
+            dispatch(showNotification(message, isError))
         }
     }
 }

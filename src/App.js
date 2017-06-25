@@ -31,13 +31,15 @@ class App extends Component {
 
   handleClickAllPhotos(){
     this.setState({
-      route: '/'
+      route: '/',
+      isHamburgerOpen: false
     })
   }
 
   handleClickOnlySub(){
     this.setState({
-      route: '/subscription'
+      route: '/subscription',
+      isHamburgerOpen: false
     })
   }
 
@@ -69,6 +71,14 @@ class App extends Component {
       'nav-item is-tab is-hidden-mobile': true,
       'is-active': this.state.route == '/subscription'
     })
+    let linkHomeMobileClass = classNames({
+      'nav-item is-tab is-hidden-tablet': true,
+      'is-active': this.state.route == '/' || this.state.route == null
+    })
+    let linkSubscriptionMobileClass = classNames({
+      'nav-item is-tab is-hidden-tablet': true,
+      'is-active': this.state.route == '/subscription'
+    })
     // console.log('firebase', firebase.auth().currentUser)
     return (
       <Router>
@@ -92,8 +102,8 @@ class App extends Component {
                   <span></span>
                 </span>
                 <div className={hamburgerMenuClass}>
-                  <a className="nav-item is-tab is-hidden-tablet is-active">All Photos</a>
-                  <a className="nav-item is-tab is-hidden-tablet">Only Subscriptions</a>
+                  <Link className={linkHomeMobileClass} onClick={this.handleClickAllPhotos} to='/'>All Photos</Link>
+                  {firebase.auth().currentUser ? <Link className={linkSubscriptionMobileClass} onClick={this.handleClickOnlySub} to='/subscription'>Only Subscriptions</Link> : null}
                   <Authentication update={this.update} />
                 </div>
               </div>

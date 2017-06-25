@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase'
 const googleSignInProvider = new firebase.auth.GoogleAuthProvider();
 
+const AUTHORIZATION_KEY = "AIzaSyDXDq8_u6oqNAUWCnTcRzY-0sFDZDZQfXQ"
 class Authentication extends Component {
     constructor(props) {
         super();
@@ -26,7 +27,30 @@ class Authentication extends Component {
 
     handleSignOut() {
         console.log('click signout')
-        this.auth.signOut();
+        firebase.database().ref(`/subscription/${firebase.auth().currentUser.uid}/tags`).once('value')
+            .then((snapshot) =>{
+                if(!snapshot.val()) return
+
+                let tags = snapshot.val();
+                return tags
+            }).then((tags) => {
+                for(let i =0; i < tags.length; i++){
+                    fetch(`https://iid.googleapis.com/iid/v1:batchRemove`, {
+                        method: 'POST',
+                        headers: new Headers({
+                            'Content-Type': 'application/json',
+                            'Authorization': `key=${AUTHORIZATION_KEY}`
+                        }),
+                        body: JSON.stringify({
+                            to : `/topics/${tags[i]}`,
+                            registration_tokens: [localStorage.getItem('fcm_token')]
+                        })
+                    }).then(resp => {
+                        console.log('Delete push notification', resp)   
+                    })
+                }
+            }).then(() => this.auth.signOut())
+        // this.auth.signOut();
     }
 
     onAuthStateChanged(user) {
@@ -46,6 +70,10 @@ class Authentication extends Component {
             this.saveMessagingDeviceToken();
         } else { // User is signed out
             console.log('User is signed out')
+        
+            //TODO: Delete push notification
+            
+            localStorage.setItem('fcm_token', "");
             this.setState({
                 user: null
             }, () => this.props.signOut())
@@ -58,12 +86,13 @@ class Authentication extends Component {
                 console.log('Got FCM device token:', currentToken)
                 localStorage.setItem('fcm_token', currentToken);
 
+                // Collect all tokens and appending
                 let fcmTokens =  firebase.database().ref(`fcmTokens/${firebase.auth().currentUser.uid}/tokens`).once('value').then((snapshot) => {
                     let allDeviceTokens = snapshot.val();
                     if(!snapshot.val()){
                         allDeviceTokens = [];   
                     }else if(allDeviceTokens.indexOf(currentToken) > -1) {
-                        return;
+                        return
                     }
                     console.log('Received allDeviceTokens', allDeviceTokens)
                     firebase.database().ref(`fcmTokens/${firebase.auth().currentUser.uid}/tokens/`)
@@ -71,17 +100,35 @@ class Authentication extends Component {
                 });
                     
 
-                // // TODO: read all subscribe topics all resubscribe
-                // console.log('read all tags for subscribe.')
-                // firebase.database().ref(`/subscription/${firbase.auth().currentUser.uid}/tags`).once('value').then((snapshot) =>{
-                //     if(!snapshot || !snapshot.val()) return;
-
-                //     let tags = snapshot.val();
-                //     console.log(tags)
-
+                // TODO: read all subscribe topics all resubscribe
+                console.log('read all tags for subscribe.')
+                firebase.database().ref(`/subscription/${firebase.auth().currentUser.uid}/tags`).once('value').then((snapshot) =>{
                     
+                    if(!snapshot.val()){
+                        console.log('User does not subscribe now.');
+                      return;  
+                    } 
+
+                    let tags = snapshot.val();
+                    console.log(tags)
+                    // Call iid to subscribe
+                    for(let i = 0; i< tags.length ; i++){
+                        let tag = tags[i];
+                        console.log('Subscribe to topic', `https://iid.googleapis.com/iid/v1/${localStorage.getItem('fcm_token')}/rel/topics/${tag}`);
+                        fetch(`https://iid.googleapis.com/iid/v1/${localStorage.getItem('fcm_token')}/rel/topics/${tag}`, {
+                                                method: 'POST',
+                                                headers: new Headers({
+                                                    'Content-Type': 'application/json',
+                                                    'Authorization': `key=${AUTHORIZATION_KEY}`
+                                                })
+                                            }).then(resp =>{
+                                                // TODO: Notify the user
+                                                if(resp.status === 200)
+                                                    console.log(`Subscribed to ${tag} successfully.`, resp)
+                                            })
+                    }
                     
-                // })
+                })
             } else {
                 // Need to request permissions to show notifications.
                 console.log('Requesting notifications permission...')

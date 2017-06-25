@@ -131,7 +131,7 @@ class Gallery extends Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <div id="gallery">
                     <div className='column is-12'>{this.state.photos}</div>
                 </div>

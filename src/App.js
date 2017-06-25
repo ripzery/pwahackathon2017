@@ -4,6 +4,7 @@ import Home from './components/Home'
 import Subscription from './components/Subscription'
 import SubscriptionDetail from './components/SubscriptionDetail'
 import "bulma/css/bulma.css"
+import "./components/css/main.css"
 import cat from './components/cat.svg'
 import firebase from 'firebase'
 import Notification from './containers/Notification'

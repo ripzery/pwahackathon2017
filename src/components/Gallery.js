@@ -128,7 +128,6 @@ class Gallery extends Component {
         // window.scrollTo(0,document.body.scrollHeight);
     }
 
-
     render() {
         return (
             <div className="container">

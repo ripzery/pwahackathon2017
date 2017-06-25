@@ -50,7 +50,10 @@ class Authentication extends Component {
                         console.log('Delete push notification', resp)
                     })
                 }
-            }).then(() => this.auth.signOut())
+            }).then(() => {
+                this.props.showNotification('Goodbye!, We will not send any notification to disturb you :)')
+                this.auth.signOut()}
+            )
         // this.auth.signOut();
     }
 
@@ -69,7 +72,6 @@ class Authentication extends Component {
             //Save device token
             this.saveMessagingDeviceToken();
         } else { // User is signed out
-            this.props.showNotification('Goodbye!, We will not send any notification to disturb you :)')
             localStorage.setItem('fcm_token', "");
             this.setState({
                 user: null

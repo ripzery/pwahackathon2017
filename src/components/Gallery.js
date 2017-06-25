@@ -132,7 +132,7 @@ class Gallery extends Component {
         return (
             <div style={{position: 'relative'}}>
                 {
-                    false
+                    this.state.photos.length > 0
                     ? 
                     <div id="gallery">
                     <div className='column is-12'>{this.state.photos}</div>

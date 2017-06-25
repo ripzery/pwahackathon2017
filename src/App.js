@@ -110,7 +110,7 @@ class App extends Component {
                     <h2 className="is-hidden-tablet" style={{ marginLeft: 8 }}><b>PhotoCats</b></h2>
                   </a>
                   <Link className={linkHomeClass} onClick={this.handleClickAllPhotos} to='/'>All Photos</Link>
-                  {firebase.auth().currentUser ? <Link className={linkSubscriptionClass} onClick={this.handleClickOnlySub} to='/subscription'>Only Subscriptions</Link> : null}
+                  {firebase.auth().currentUser ? <Link className={linkSubscriptionClass} onClick={this.handleClickOnlySub} to='/subscription'>My Subscriptions</Link> : null}
                 </div>
                 <span className={hamburgerClass} onClick={this.handleClickHamburger}>
                   <span></span>
@@ -119,7 +119,7 @@ class App extends Component {
                 </span>
                 <div className={hamburgerMenuClass}>
                   <Link className={linkHomeMobileClass} onClick={this.handleClickAllPhotos} to='/'>All Photos</Link>
-                  {firebase.auth().currentUser ? <Link className={linkSubscriptionMobileClass} onClick={this.handleClickOnlySub} to='/subscription'>Only Subscriptions</Link> : null}
+                  {firebase.auth().currentUser ? <Link className={linkSubscriptionMobileClass} onClick={this.handleClickOnlySub} to='/subscription'>My Subscriptions</Link> : null}
                   <Authentication update={this.update} />
                 </div>
               </div>

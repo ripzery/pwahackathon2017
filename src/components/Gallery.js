@@ -130,7 +130,7 @@ class Gallery extends Component {
 
     render() {
         return (
-            <div className="container" style={{height:'100vh'}}>
+            <div>
                 {
                     this.state.photos.length > 0
                     ? 
@@ -138,7 +138,9 @@ class Gallery extends Component {
                     <div className='column is-12'>{this.state.photos}</div>
                     </div>
                     :
-                    <h3 className="title loading-title">Loading...</h3>
+                    <div className="block-loading">
+                        <h3 className="title loading-title">Loading...</h3>
+                    </div>
                 }
                 
                 <SubscribeDialog message={this.state.subscribeDialog.message} closeDialogHandler={this.closeSubscribeDialog} isShow={this.state.subscribeDialog.isShowSubscribeDialog} />

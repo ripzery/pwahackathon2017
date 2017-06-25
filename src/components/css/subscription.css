@@ -1,3 +1,50 @@
 text-overlay {
     top: 50%
 }
+
+.subscription-item {
+    
+}
+
+.subscription-item li {
+    background: white;
+    padding: 16px;
+    list-style: none;    
+    display: inline-block;
+    margin: 16px;
+    width: 20%;
+    border: 1px solid #000;
+    word-wrap: break-word;
+    border-radius: 4px;
+    text-align: center;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+.subscription-item li:hover {
+    border-color: #00d1b2;
+}
+
+.subscription-item li:hover a {
+    color: #00d1b2;
+    border-color: #00d1b2;
+}
+
+.subscription-item li a {
+    color: #000;
+}
+
+@media (max-width: 768px) {
+    .subscription-item {
+        padding: 16px;
+    }
+    
+    .subscription-item li {
+        width: 100%;
+        margin: 0;
+    }
+
+    .subscription-item li+li {
+        margin-top: 16px;
+    }
+}

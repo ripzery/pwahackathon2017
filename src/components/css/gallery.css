@@ -34,5 +34,6 @@
     top: 50%;
     text-align: center;
     transform: translate(0, -50%);
-    position: relative;
+    position: absolute;
+    width: 100%;
 }

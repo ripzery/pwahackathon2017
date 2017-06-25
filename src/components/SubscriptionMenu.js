@@ -1,9 +1,9 @@
 import React from 'react';
-
+import "./css/subscription.css"
 
 const SubscriptionMenu = ({link}) => {
     return (
-        <div>
+        <div className="subscription-item">
             {link}
         </div>
     );

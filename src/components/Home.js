@@ -4,6 +4,7 @@ import Add from '../containers/Add';
 import Gallery from '../containers/Gallery';
 import UploadDialog from '../containers/UploadDialog';
 import firebase from 'firebase'
+import "./css/main.css"
 
 class Home extends Component {
   constructor(params) {
@@ -12,13 +13,15 @@ class Home extends Component {
 
   render() {
     return (
-      <div className='container' style={{ height: '100vh' }}>
+      <div className='container'>
         {this.props.connected ?
           <div>
             <Gallery />
             <Add />
             <UploadDialog /> </div> :
-          <h3 className="title loading-title is-4">We need internet connection to add or display awesome photos. 😢</h3>
+            <div className="block-loading">
+              <h3 className="title loading-title is-4">We need internet connection to add or display awesome photos. 😢</h3>
+            </div>
         }
       </div>
     );

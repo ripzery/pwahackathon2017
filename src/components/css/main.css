@@ -1,10 +1,14 @@
-html,
+/*html,
 body {
     min-height: 800px
-}
+}*/
 
 body {
     background-image: url("../cover.png");
     background-repeat: repeat;
     background-attachment: scroll;
+}
+
+.block-loading {
+    height: 100vh;
 }

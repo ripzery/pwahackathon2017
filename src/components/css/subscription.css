@@ -3,7 +3,7 @@ text-overlay {
 }
 
 .subscription-item {
-    
+    height: calc(100vh - 52px);
 }
 
 .subscription-item li {

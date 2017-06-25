@@ -3,6 +3,10 @@
     transition: 0.5s ease;
 }
 
+.full-height {
+    height: calc(100vh - 52px);
+}
+
 .photo-cats-tag {
     position: absolute;
     z-index: 999;

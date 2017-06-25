@@ -3,10 +3,15 @@ body {
     min-height: 800px
 }*/
 
+html, body {
+    height: 100%;
+}
+
 body {
     background-image: url("../cover.png");
     background-repeat: repeat;
     background-attachment: scroll;
+    overflow-y: auto;
 }
 
 .block-loading {

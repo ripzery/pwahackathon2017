@@ -6,6 +6,7 @@ import addReducer from './addReducer'
 import userReducer from './userReducer'
 import subscribeDialogReducer from './subscribeDialogReducer'
 import notificationReducer from './notificationReducer'
+import connectivityReducer from './connectivityReducer'
 
 const rootReducer = combineReducers({
     // router: routerStateReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     subscribe_dialog_opened: subscribeDialogReducer,
     addReducer: addReducer,
     userReducer: userReducer,
-    notification: notificationReducer
+    notification: notificationReducer,
+    connected: connectivityReducer,
 })
 
 export default rootReducer;

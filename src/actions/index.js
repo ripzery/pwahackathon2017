@@ -1,4 +1,4 @@
-import { ADD_IMAGES, TOGGLE_DIALOG, CLEAR_IMAGES, SET_VISIBILITY_ADD, SIGN_IN_GOOGLE, SIGN_OUT_GOOGLE, SHOW_NOTIFICATION, HIDE_NOTIFICATION, TOGGLE_SUBSCRIBE_DIALOG } from './types';
+import { ADD_IMAGES, TOGGLE_DIALOG, CLEAR_IMAGES, SET_VISIBILITY_ADD, SIGN_IN_GOOGLE, SIGN_OUT_GOOGLE, SHOW_NOTIFICATION, HIDE_NOTIFICATION, TOGGLE_SUBSCRIBE_DIALOG, TOGGLE_CONNECTIVITY } from './types';
 
 const addImages = (images) => ({
     type: ADD_IMAGES,
@@ -45,6 +45,11 @@ const hideNotification = () => ({
     isError: false
 })
 
+const toggleConnectivity = (connected) => ({
+    type: TOGGLE_CONNECTIVITY,
+    connected: connected
+})
+
 export {
     addImages,
     toggleDialog,
@@ -54,5 +59,6 @@ export {
     signOut,
     showNotification,
     hideNotification,
-    toggleSubscribeDialog
+    toggleSubscribeDialog,
+    toggleConnectivity
 }

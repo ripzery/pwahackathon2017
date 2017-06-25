@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Home from './components/Home'
+import Home from './containers/Home'
 import Subscription from './components/Subscription'
 import SubscriptionDetail from './components/SubscriptionDetail'
 import "bulma/css/bulma.css"
@@ -30,6 +30,20 @@ class App extends Component {
     this.update = this.update.bind(this)
     this.handleClickHamburger = this.handleClickHamburger.bind(this)
   }
+
+  componentDidMount() {
+    let connectedRef = firebase.database().ref('.info/connected');
+    connectedRef.on('value', (snap) => {
+      if (snap.val()) {
+        this.props.toggleConnectivity(true)
+        console.log('Connected')
+      } else {
+        this.props.toggleConnectivity(false)
+        console.log('Disconnected');
+      }
+    });
+  }
+  
 
   handleClickAllPhotos() {
     this.setState({

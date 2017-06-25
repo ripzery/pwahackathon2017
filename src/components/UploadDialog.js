@@ -40,7 +40,7 @@ class UploadDialog extends Component {
     handleCrop() {
         let croppedImage = this.refs.cropper.getCroppedCanvas().toDataURL();
         let imageName = this.props.images[0].name;
-        //TODO: Upload image using key
+        
         this.database.push({tag: 'Any', imageUrl: UploadDialog.LOADING_IMAGE_URL})
             .then(function(data){
                 console.log(data);

@@ -76,7 +76,7 @@ class UploadDialog extends Component {
                             <Cropper
                                 ref='cropper'
                                 src={this.state.image}
-                                style={{ height: 400, width: '100%' }}
+                                className="is-square"
                                 // Cropper.js options
                                 aspectRatio={1}
                                 guides={true}

@@ -108,21 +108,7 @@ class App extends Component {
                 </div>
               </div>
             </nav>
-            {/*<section className="hero">
-                    <div className="hero-body">
-                        <div className="container">
-                            <h1 className="title">
-                                <img src={cat} width={48} height={48} /> Autocats
-                            </h1>
-                            <h2 className="subtitle">
-                                Upload any photos, but we display clearly only a cat!
-                            </h2>
-                        </div>
-                    </div>
-                </section>*/}
-                  
           </div>
-          {/*Add child component here*/}
           <Notification dialog={false}/>
           <Route exact path="/" component={Home} />
           <Route exact path="/subscription" component={Subscription} />

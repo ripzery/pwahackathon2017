@@ -128,7 +128,7 @@ class Authentication extends Component {
                         })
                     }
                 }).then(() => {
-                    this.props.showNotification(`Welcome ${this.state.user.displayName} to Photocats. You can subscribe some categories by clicking on the photo.`)
+                    this.props.showNotification(`Welcome ${this.state.user.displayName} to Autocats. You can subscribe some categories by clicking on the photo.`)
                 })
             } else {
                 // Need to request permissions to show notifications.

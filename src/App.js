@@ -107,7 +107,7 @@ class App extends Component {
                     <figure className="image is-32x32">
                       <img src={cat} alt="Bulma logo" />
                     </figure>
-                    <h2 className="is-hidden-tablet" style={{ marginLeft: 8 }}><b>PhotoCats</b></h2>
+                    <h2 className="is-hidden-tablet" style={{ marginLeft: 8 }}><b>Autocats</b></h2>
                   </a>
                   <Link className={linkHomeClass} onClick={this.handleClickAllPhotos} to='/'>All Photos</Link>
                   {firebase.auth().currentUser ? <Link className={linkSubscriptionClass} onClick={this.handleClickOnlySub} to='/subscription'>My Subscriptions</Link> : null}

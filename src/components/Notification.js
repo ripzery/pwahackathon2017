@@ -7,6 +7,7 @@ class Notification extends Component {
         super();
         this.handleDelete = this.handleDelete.bind(this)
         this.hideNotification = this.hideNotification.bind(this)
+        this.isDialog = props.dialog;
         this.notification = null
     }
 
@@ -35,7 +36,7 @@ class Notification extends Component {
             'notification': true,
             'is-primary': !this.props.isError,
             'is-danger': this.props.isError,
-            'is-hidden': !this.props.isShow
+            'is-hidden': !this.props.isShow || this.isDialog != this.props.isDialog
         })
         return (
             <div className={notificationClass}>

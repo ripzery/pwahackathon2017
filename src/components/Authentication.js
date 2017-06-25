@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase'
+import './css/authentication.css'
 const googleSignInProvider = new firebase.auth.GoogleAuthProvider();
 
 const AUTHORIZATION_KEY = "AIzaSyDXDq8_u6oqNAUWCnTcRzY-0sFDZDZQfXQ"
@@ -28,13 +29,13 @@ class Authentication extends Component {
     handleSignOut() {
         console.log('click signout')
         firebase.database().ref(`/subscription/${firebase.auth().currentUser.uid}/tags`).once('value')
-            .then((snapshot) =>{
-                if(!snapshot.val()) return
+            .then((snapshot) => {
+                if (!snapshot.val()) return
 
                 let tags = snapshot.val();
                 return tags
             }).then((tags) => {
-                for(let i =0; i < tags.length; i++){
+                for (let i = 0; i < tags.length; i++) {
                     fetch(`https://iid.googleapis.com/iid/v1:batchRemove`, {
                         method: 'POST',
                         headers: new Headers({
@@ -42,11 +43,11 @@ class Authentication extends Component {
                             'Authorization': `key=${AUTHORIZATION_KEY}`
                         }),
                         body: JSON.stringify({
-                            to : `/topics/${tags[i]}`,
+                            to: `/topics/${tags[i]}`,
                             registration_tokens: [localStorage.getItem('fcm_token')]
                         })
                     }).then(resp => {
-                        console.log('Delete push notification', resp)   
+                        console.log('Delete push notification', resp)
                     })
                 }
             }).then(() => this.auth.signOut())
@@ -83,42 +84,42 @@ class Authentication extends Component {
                 localStorage.setItem('fcm_token', currentToken);
 
                 // Collect all tokens and appending
-                let fcmTokens =  firebase.database().ref(`fcmTokens/${firebase.auth().currentUser.uid}/tokens`).once('value').then((snapshot) => {
+                let fcmTokens = firebase.database().ref(`fcmTokens/${firebase.auth().currentUser.uid}/tokens`).once('value').then((snapshot) => {
                     let allDeviceTokens = snapshot.val();
-                    if(!snapshot.val()){
-                        allDeviceTokens = [];   
-                    }else if(allDeviceTokens.indexOf(currentToken) > -1) {
+                    if (!snapshot.val()) {
+                        allDeviceTokens = [];
+                    } else if (allDeviceTokens.indexOf(currentToken) > -1) {
                         return
                     }
                     console.log('Received allDeviceTokens', allDeviceTokens)
                     firebase.database().ref(`fcmTokens/${firebase.auth().currentUser.uid}/tokens/`)
                         .set([...allDeviceTokens, currentToken]).then(() => { console.log('Update device token of user', firebase.auth().currentUser.uid) });
                 });
-                    
-                firebase.database().ref(`/subscription/${firebase.auth().currentUser.uid}/tags`).once('value').then((snapshot) =>{
-                    
-                    if(!snapshot.val()){
+
+                firebase.database().ref(`/subscription/${firebase.auth().currentUser.uid}/tags`).once('value').then((snapshot) => {
+
+                    if (!snapshot.val()) {
                         console.log('User does not subscribe now.');
-                      return;  
-                    } 
+                        return;
+                    }
 
                     let tags = snapshot.val();
                     console.log(tags)
                     // Call iid to subscribe
-                    for(let i = 0; i< tags.length ; i++){
+                    for (let i = 0; i < tags.length; i++) {
                         let tag = tags[i];
                         console.log('Subscribe to topic', `https://iid.googleapis.com/iid/v1/${localStorage.getItem('fcm_token')}/rel/topics/${tag}`);
-                        fetch(`https://iid.googleapis.com/iid/v1/${localStorage.getItem('fcm_token')}/rel/topics/${tag}`, {
-                                                method: 'POST',
-                                                headers: new Headers({
-                                                    'Content-Type': 'application/json',
-                                                    'Authorization': `key=${AUTHORIZATION_KEY}`
-                                                })
-                                            }).then(resp =>{
-                                                // TODO: Notify the user
-                                                if(resp.status === 200)
-                                                    console.log(`Subscribed to ${tag} successfully.`, resp)
-                                            })
+                        fetch(`https://iid.googleapis.com/iid/v1/${localStorage.getItem('fcm_token')}/rel/topics/${tag.tag}`, {
+                            method: 'POST',
+                            headers: new Headers({
+                                'Content-Type': 'application/json',
+                                'Authorization': `key=${AUTHORIZATION_KEY}`
+                            })
+                        }).then(resp => {
+                            // TODO: Notify the user
+                            if (resp.status === 200)
+                                console.log(`Subscribed to ${tag} successfully.`, resp)
+                        })
                     }
                 }).then(() => {
                     this.props.showNotification(`Welcome ${this.state.user.displayName} to Photocats. You can subscribe some categories by clicking on the photo.`)
@@ -142,16 +143,20 @@ class Authentication extends Component {
             <a className="button is-info" style={{ marginTop: 8 }} onClick={this.handleSignIn}>Sign-in with Google <i className="fa fa-google" style={{ marginLeft: 8 }} aria-hidden="true"></i></a>
         </div>
         const SignOut =
-            <div className='nav-item is-tab' onClick={this.handleSignOut}>
-                <figure className="image is-32x32" style={{ marginRight: 8 }}>
-                    <img src={!this.state.user ? '' : this.state.user.photoURL} />
-                </figure>
-                {this.state.user == null ? '' : this.state.user.displayName}
-                <a className='button is-danger' style={{ marginLeft: 8 }}> Sign out</a>
+            <div className='field is-grouped user-profile' onClick={this.handleSignOut}>
+                <div className="control">
+                    <figure className="image is-32x32">
+                        <img src={!this.state.user ? '' : this.state.user.photoURL} />
+                    </figure>
+                    {this.state.user == null ? '' : this.state.user.displayName}
+                </div>
+                <div className="control">
+                    <a className='button is-danger' style={{ marginLeft: 8 }}> Sign out</a>
+                </div>
             </div>
 
         return (
-            <div>
+            <div className="nav-item is-tab">
                 {this.state.user ? SignOut : SignIn}
             </div>
         );

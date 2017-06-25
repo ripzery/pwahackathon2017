@@ -19,12 +19,14 @@ const classNames = require('classnames');
 class App extends Component {
   constructor(params) {
     super();
+    this.state = {
+      isHamburgerOpen: false,
+      route: window.location.pathname.indexOf('subscription') > -1 ? '/subscription' : '/'
+    }
     this.handleClickAllPhotos = this.handleClickAllPhotos.bind(this)
     this.handleClickOnlySub = this.handleClickOnlySub.bind(this)
     this.update = this.update.bind(this)
-    this.state = {
-      route: window.location.pathname.indexOf('subscription') > -1 ? '/subscription' : '/'
-    }
+    this.handleClickHamburger = this.handleClickHamburger.bind(this)
   }
 
   handleClickAllPhotos(){
@@ -39,11 +41,26 @@ class App extends Component {
     })
   }
 
+  handleClickHamburger(){
+    console.log('click ham')
+    this.setState({
+      isHamburgerOpen: !this.state.isHamburgerOpen
+    })
+  }
+
   update(){
       this.forceUpdate()
   }
 
   render() {
+    let hamburgerClass = classNames({
+      'nav-toggle': true,
+      'is-active': this.state.isHamburgerOpen
+    })
+    let hamburgerMenuClass = classNames({
+      'nav-right nav-menu': true,
+      'is-active': this.state.isHamburgerOpen
+    }) 
     let linkHomeClass = classNames({
       'nav-item is-tab is-hidden-mobile': true,
       'is-active': this.state.route == '/' || this.state.route == null
@@ -64,16 +81,17 @@ class App extends Component {
                     <figure className="image is-32x32">
                       <img src={cat} alt="Bulma logo" />
                     </figure>
+                    <h2 className="is-hidden-tablet" style={{marginLeft: 8}}><b>PhotoCats</b></h2>
                   </a>
                   <Link className={linkHomeClass} onClick={this.handleClickAllPhotos} to='/'>All Photos</Link>
                   { firebase.auth().currentUser ? <Link className={linkSubscriptionClass} onClick={this.handleClickOnlySub} to='/subscription'>Only Subscriptions</Link> : null}
                 </div>
-                <span className="nav-toggle">
+                <span className={hamburgerClass} onClick={this.handleClickHamburger}>
                   <span></span>
                   <span></span>
                   <span></span>
                 </span>
-                <div className="nav-right nav-menu">
+                <div className={hamburgerMenuClass}>
                   <a className="nav-item is-tab is-hidden-tablet is-active">All Photos</a>
                   <a className="nav-item is-tab is-hidden-tablet">Only Subscriptions</a>
                   <Authentication update={this.update} />
@@ -95,7 +113,7 @@ class App extends Component {
                   
           </div>
           {/*Add child component here*/}
-          <Notification />
+          <Notification dialog={false}/>
           <Route exact path="/" component={Home} />
           <Route exact path="/subscription" component={Subscription} />
           <Route path="/subscription/:type" component={SubscriptionDetail} />

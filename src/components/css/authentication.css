@@ -1,0 +1,8 @@
+.user-profile .image {
+    margin-right: 8px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.user-profile .control:first-child {
+    line-height: 36px
+}

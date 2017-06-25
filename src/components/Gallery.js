@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import SubscribeDialog from './SubscribeDialog'
+import SubscribeDialog from '../containers/SubscribeDialog'
 import './css/gallery.css'
 import firebase from 'firebase'
 
@@ -130,10 +130,8 @@ class Gallery extends Component {
     render() {
         return (
             <div>
-                <div id="gallery" className='columns is-mobile' style={{ marginTop: 16 }}>
-                    <div className='column is-1'></div>
-                    <div className='column is-10'>{this.state.photos}</div>
-                    <div className='column is-1'></div>
+                <div id="gallery">
+                    <div className='column is-12'>{this.state.photos}</div>
                 </div>
                 <SubscribeDialog message={this.state.subscribeDialog.message} closeDialogHandler={this.closeSubscribeDialog} isShow={this.state.subscribeDialog.isShowSubscribeDialog} />
             </div>

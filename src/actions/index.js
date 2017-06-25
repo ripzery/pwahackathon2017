@@ -27,8 +27,9 @@ const signOut = () => ({
     type: SIGN_OUT_GOOGLE
 })
 
-const showNotification = (message, isError = false) => ({
+const showNotification = (message, isError = false, isDialog = false) => ({
     type: SHOW_NOTIFICATION,
+    isDialog:  isDialog,
     message: message,
     isError: isError,
     isShow: true

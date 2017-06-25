@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase'
+import Notification from '../containers/Notification'
 
 const classNames = require('classnames')
 const AUTHORIZATION_KEY = "AIzaSyDXDq8_u6oqNAUWCnTcRzY-0sFDZDZQfXQ"
@@ -20,7 +21,7 @@ class SubscribeDialog extends Component {
         }
     }
 
-    handleSubscribe(tag) {
+    handleSubscribe(tag, imageUrl) {
         // Handle error
         if(firebase.auth().currentUser == null) return;
         let database = firebase.database().ref(`subscription/${firebase.auth().currentUser.uid}`)
@@ -28,16 +29,19 @@ class SubscribeDialog extends Component {
             .then((snapshot) => {
                 if (!snapshot || !snapshot.val()){
                     this.database.ref(`subscription/${firebase.auth().currentUser.uid}`).set({
-                        tags: [tag]
+                        tags: [{
+                            tag: tag,
+                            imageUrl: imageUrl
+                        }]
                     })
                     return;
                 }
 
                 let val = snapshot.val()
 
-                // User has already subscribe!
                 if(val.tags.indexOf(tag) > -1){
                     //TODO: show notification to user
+                    this.props.showNotification('You\'ve already subscribed to ' + tag + ' 😙');
                     throw new Error('User has already been subscribed to ' + tag + '!');
                 }
 
@@ -47,11 +51,11 @@ class SubscribeDialog extends Component {
                 if(!tags) return
                 console.log('Subscribing '+ tag + '...')
                 firebase.database().ref(`subscription/${firebase.auth().currentUser.uid}`).set({
-                    tags: [...tags, tag]
+                    tags: [...tags, {tag: tag, imageUrl: imageUrl}]
                 })
             })
             .then(() => {
-                console.log('User has been subscribe to ' + tag + ' successfully');
+                this.props.showNotification('Subscribe to ' + tag + ` successfully. We\'ll notify you when ${tag} is uploaded. 👍`)
 
                 //TODO: subscribe the client app to a topic
                 console.log('Subscribe to topic', `https://iid.googleapis.com/iid/v1/${localStorage.getItem('fcm_token')}/rel/topics/${tag}`);
@@ -85,6 +89,7 @@ class SubscribeDialog extends Component {
             <div className={modalClass}>
                 <div className="modal-background"></div>
                 <div className="modal-card">
+                    <Notification dialog={true}/>
                     <header className="modal-card-head">
                         <p className="modal-card-title">Subscribe to something like.. <b>{this.props.message ? `${this.props.message.tag[0]} or ${this.props.message.tag[1]}?` : ''}</b></p>
                     </header>
@@ -94,8 +99,8 @@ class SubscribeDialog extends Component {
                         </p>
                     </section>
                     <footer className="modal-card-foot">
-                        <a className='button is-success' onClick={() => this.handleSubscribe(this.props.message.tag[0])}>I wanna see {this.props.message ? `${this.props.message.tag[0]}.` : ''}</a>
-                        <a className='button' onClick={() => this.handleSubscribe(this.props.message.tag[1])}>{this.props.message ? `No, see ${this.props.message.tag[1]} better!` : ''}</a>
+                        <a className='button is-success' onClick={() => this.handleSubscribe(this.props.message.tag[0], this.props.message.imageUrl)}>I wanna see {this.props.message ? `${this.props.message.tag[0]}.` : ''}</a>
+                        <a className='button' onClick={() => this.handleSubscribe(this.props.message.tag[1], this.props.message.imageUrl)}>{this.props.message ? `No, see ${this.props.message.tag[1]} better!` : ''}</a>
                         <a className='button' onClick={this.props.closeDialogHandler}>Nope</a>
                     </footer>
                 </div>

@@ -25,7 +25,7 @@ class UploadDialog extends Component {
         if (nextProps.images.length > 0) {
             window.image = nextProps.images[0]
             let fileReader = new FileReader()
-            fileReader.onload = (e) => this.setState({ image: e.target.result, opened: nextProps.upload_dialog_opened })
+            fileReader.onload = (e) => this.setState({ image: e.target.result, opened: nextProps.dialog_opened })
             fileReader.readAsDataURL(nextProps.images[0]);
         }
     }
@@ -60,7 +60,7 @@ class UploadDialog extends Component {
     render() {
         let modalClass = classNames({
             'modal': true,
-            'is-active': this.props.upload_dialog_opened,
+            'is-active': this.props.dialog_opened,
         })
         return (
             <div className={modalClass}>

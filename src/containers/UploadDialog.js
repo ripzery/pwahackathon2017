@@ -5,7 +5,7 @@ import UploadDialog from '../components/UploadDialog';
 const mapStateToProps = (state, ownProps) => {
     return {
         images: state.images,
-        upload_dialog_opened: state.upload_dialog_opened,
+        dialog_opened: state.dialog_opened,
     };
 };
 

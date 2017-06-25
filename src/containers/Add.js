@@ -3,7 +3,8 @@ import { addImages, toggleDialog, showNotification } from '../actions'
 import Add from '../components/Add';
 
 const mapStateToProps = (state, ownProps) => ({
-    upload_dialog_opened: state.upload_dialog_opened
+    dialog_opened: state.dialog_opened,
+    subscribe_dialog_opened: state.subscribe_dialog_opened
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {

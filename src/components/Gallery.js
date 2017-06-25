@@ -95,6 +95,8 @@ class Gallery extends Component {
                 isShowSubscribeDialog: true,
                 message: message
             }
+        }, () => {
+            this.props.toggleSubscribeDialog();
         })
     }
 
@@ -104,7 +106,7 @@ class Gallery extends Component {
                 isShowSubscribeDialog: false,
                 message: null
             }
-        })
+        }, this.props.toggleSubscribeDialog)
     }
 
     componentDidMount() {

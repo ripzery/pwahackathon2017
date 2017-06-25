@@ -6,7 +6,7 @@ import userReducer from './userReducer'
 
 const rootReducer = combineReducers({
     images: imagesReducer,
-    upload_dialog_opened: uploadDialogReducer,
+    dialog_opened: uploadDialogReducer,
     addReducer: addReducer,
     userReducer: userReducer
 })

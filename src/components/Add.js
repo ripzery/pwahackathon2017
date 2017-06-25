@@ -28,7 +28,7 @@ class Add extends Component {
 
     render() {
         return (
-            <div style={{display: this.props.upload_dialog_opened ? 'none' : 'block'}}>
+            <div style={{display: this.props.dialog_opened || this.props.subscribe_dialog_opened ? 'none' : 'block'}}>
                 <Menu effect="slidein" method="click" position="br" >
                     <MainButton iconResting="fa fa-plus" iconActive="fa fa-times" />
                     <ChildButton icon="fa fa-file-image-o" label="Add photo" onClick={this.handleAdd.bind(this)} />

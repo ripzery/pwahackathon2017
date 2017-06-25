@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase'
 import Notification from '../containers/Notification'
+import "./css/subscription_dialog.css"
 
 const classNames = require('classnames')
 const AUTHORIZATION_KEY = "AIzaSyDXDq8_u6oqNAUWCnTcRzY-0sFDZDZQfXQ"
@@ -10,7 +11,6 @@ class SubscribeDialog extends Component {
         this.state = {
             isShow: props.isShow
         }
-        // console.log('SubscribeDialog', props.message);
         this.database = firebase.database();
         this.handleSubscribe = this.handleSubscribe.bind(this)
     }

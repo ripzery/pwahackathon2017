@@ -27,3 +27,12 @@
 .photo-cats-container:hover .photo-cats-tag {
     opacity: 1;
 }
+
+.loading-title {
+    /*hei*/
+    margin-top: -52px;
+    top: 50%;
+    text-align: center;
+    transform: translate(0, -50%);
+    position: relative;
+}

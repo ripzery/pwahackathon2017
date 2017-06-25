@@ -130,10 +130,17 @@ class Gallery extends Component {
 
     render() {
         return (
-            <div className="container">
-                <div id="gallery">
+            <div className="container" style={{height:'100vh'}}>
+                {
+                    this.state.photos.length > 0
+                    ? 
+                    <div id="gallery">
                     <div className='column is-12'>{this.state.photos}</div>
-                </div>
+                    </div>
+                    :
+                    <h3 className="title loading-title">Loading...</h3>
+                }
+                
                 <SubscribeDialog message={this.state.subscribeDialog.message} closeDialogHandler={this.closeSubscribeDialog} isShow={this.state.subscribeDialog.isShowSubscribeDialog} />
             </div>
 

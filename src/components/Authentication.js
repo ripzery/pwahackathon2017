@@ -56,7 +56,6 @@ class Authentication extends Component {
     onAuthStateChanged(user) {
         this.props.update()
         if (user) { // User is signed in
-            // TODO: Implement save device token to firebase realtime database fcmTokens
             console.log('User is signed-in', user)
             this.setState({
                 user: {
@@ -69,10 +68,7 @@ class Authentication extends Component {
             //Save device token
             this.saveMessagingDeviceToken();
         } else { // User is signed out
-            console.log('User is signed out')
-        
-            //TODO: Delete push notification
-            
+            this.props.showNotification('Goodbye!, We will not send any notification to disturb you :)')
             localStorage.setItem('fcm_token', "");
             this.setState({
                 user: null
@@ -99,9 +95,6 @@ class Authentication extends Component {
                         .set([...allDeviceTokens, currentToken]).then(() => { console.log('Update device token of user', firebase.auth().currentUser.uid) });
                 });
                     
-
-                // TODO: read all subscribe topics all resubscribe
-                console.log('read all tags for subscribe.')
                 firebase.database().ref(`/subscription/${firebase.auth().currentUser.uid}/tags`).once('value').then((snapshot) =>{
                     
                     if(!snapshot.val()){
@@ -127,16 +120,19 @@ class Authentication extends Component {
                                                     console.log(`Subscribed to ${tag} successfully.`, resp)
                                             })
                     }
-                    
+                }).then(() => {
+                    this.props.showNotification(`Welcome ${this.state.user.displayName} to Photocats. You can subscribe some categories by clicking on the photo.`)
                 })
             } else {
                 // Need to request permissions to show notifications.
                 console.log('Requesting notifications permission...')
+                this.props.showNotification('Allow notification to receive any update about photo you\'ve subscribed from us.')
                 firebase.messaging().requestPermission().then(() => {
                     this.saveMessagingDeviceToken();
                 })
             }
         }).catch(error => {
+            this.props.showNotification('Unexpected feature, but we can\'t get messaging token :(', true)
             console.error('Unable to get messaging token.', error);
         })
     }
@@ -153,8 +149,6 @@ class Authentication extends Component {
                 {this.state.user == null ? '' : this.state.user.displayName}
                 <a className='button is-danger' style={{ marginLeft: 8 }}> Sign out</a>
             </div>
-
-
 
         return (
             <div>

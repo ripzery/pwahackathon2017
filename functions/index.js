@@ -85,7 +85,7 @@ exports.sendSubscribeNotification = functions.storage.object().onChange(event =>
                             title: `New ${tags[1]} Photo!`,
                             body: `Someone has been uploaded ${tags[1]} to the app!`,
                             icon: '/favicon.ico',
-                            click_action: `https://pwa-hackathon-2017.com/subscription/${tags[1]}`
+                            click_action: `https://pwa-hackathon-2017.firebaseapp.com/subscription/${tags[1]}`
                         },
                         to: `/topics/${tags[1]}`
                     }

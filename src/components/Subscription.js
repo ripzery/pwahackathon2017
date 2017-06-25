@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
 import SubscriptionDetail from './SubscriptionDetail'
 import SubscriptionMenu from './SubscriptionMenu'
+import Notification from './Notification'
 import firebase from 'firebase';
 
 class Subscription extends Component {

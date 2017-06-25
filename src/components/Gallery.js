@@ -24,20 +24,17 @@ class Gallery extends Component {
         this.closeSubscribeDialog = this.closeSubscribeDialog.bind(this)
     }
 
-    componentWillReceiveProps(nextProps) {
-
-    }
-
     loadMessages(data) {
         if (!this._isMounted) return;
         let val = data.val()
+        console.log('data', val);
         // if state doesn't contain the message
         if (this.state.messages.filter(message => message.key === data.key).length === 0) {
             if (val.imageUrl.startsWith('gs://')) {
                 this.storage.refFromURL(val.imageUrl).getMetadata().then(metadata => {
                     if (!this._isMounted) return;
                     this.setState({
-                        messages: [...this.state.messages, this.generateMessage(data.key, val.tag, metadata.downloadURLs[0])]
+                        messages: [...this.state.messages, this.generateMessage(data.key, val.tag, val.labels, metadata.downloadURLs[0])]
                     }, this.generatePhotos)
                 })
 
@@ -45,7 +42,7 @@ class Gallery extends Component {
             }
             if (!this._isMounted) return;
             this.setState({
-                messages: [...this.state.messages, this.generateMessage(data.key, val.tag, val.imageUrl)]
+                messages: [...this.state.messages, this.generateMessage(data.key, val.tag, val.labels, val.imageUrl)]
             }, this.generatePhotos)
         } else {
             let updateMessage = this.state.messages.filter(message => data.key === message.key)[0]
@@ -62,7 +59,7 @@ class Gallery extends Component {
                     this.setState({
                         messages: [
                             ...this.state.messages.slice(0, indexUpdateMessage),
-                            this.generateMessage(data.key, val.tag, metadata.downloadURLs[0]),
+                            this.generateMessage(data.key, val.tag, val.labels, metadata.downloadURLs[0]),
                             ...this.state.messages.slice(indexUpdateMessage + 1)
                         ]
                     }, this.generatePhotos)
@@ -72,7 +69,7 @@ class Gallery extends Component {
                 this.setState({
                     messages: [
                         ...this.state.messages.slice(0, indexUpdateMessage),
-                        this.generateMessage(data.key, val.tag, val.imageUrl),
+                        this.generateMessage(data.key, val.tag, val.labels, val.imageUrl),
                         ...this.state.messages.slice(indexUpdateMessage + 1)
                     ]
                 }, this.generatePhotos)
@@ -82,7 +79,16 @@ class Gallery extends Component {
 
     handleClickImage(message) {
         //TODO: Show message that can't click without authentication
-        if(!firebase.auth().currentUser) return
+        message = this.state.messages.filter(m => m.key == message.key)[0];
+        console.log('message', message)
+        if(!firebase.auth().currentUser){
+            this.props.showNotification('Please login first, then you can subscribe the photo 🙂')
+            return
+        } 
+        if(!message.labels){
+            this.props.showNotification('Please wait for a moment. We\'re currently categorized the photo 😉')
+            return
+        }
 
         this.setState({
             subscribeDialog: {
@@ -138,8 +144,8 @@ class Gallery extends Component {
 
 Gallery.LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif"
 
-Gallery.prototype.generateMessage = function (key, tag, imageUrl) {
-    return { key, tag, imageUrl }
+Gallery.prototype.generateMessage = function (key, tag, labels, imageUrl) {
+    return { key, tag, labels, imageUrl }
 }
 
 Gallery.prototype.generatePhotos = function () {

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Authentication from '../components/Authentication';
-import { signInWithGoogle, signOut } from '../actions';
+import { signInWithGoogle, signOut, showNotification } from '../actions';
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -9,6 +9,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         signOut: () => {
             dispatch(signOut())
+        },
+        showNotification: (message) => {
+            dispatch(showNotification(message))
         }
     };
 };

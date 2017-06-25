@@ -1,4 +1,4 @@
-import { ADD_IMAGES, TOGGLE_DIALOG, CLEAR_IMAGES, SET_VISIBILITY_ADD, SIGN_IN_GOOGLE, SIGN_OUT_GOOGLE } from './types';
+import { ADD_IMAGES, TOGGLE_DIALOG, CLEAR_IMAGES, SET_VISIBILITY_ADD, SIGN_IN_GOOGLE, SIGN_OUT_GOOGLE, SHOW_NOTIFICATION, HIDE_NOTIFICATION } from './types';
 
 const addImages = (images) => ({
     type: ADD_IMAGES,
@@ -27,11 +27,26 @@ const signOut = () => ({
     type: SIGN_OUT_GOOGLE
 })
 
+const showNotification = (message, isError = false) => ({
+    type: SHOW_NOTIFICATION,
+    message: message,
+    isError: isError,
+    isShow: true
+})
+
+const hideNotification = () => ({
+    type: HIDE_NOTIFICATION,
+    isShow: false,
+    isError: false
+})
+
 export {
     addImages,
     toggleDialog,
     clearImages,
     setVisibilityAdd,
     signInWithGoogle,
-    signOut
+    signOut,
+    showNotification,
+    hideNotification
 }

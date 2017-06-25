@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Gallery from '../components/Gallery'
-import { addImages } from '../actions'
+import { addImages,showNotification } from '../actions'
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -8,4 +8,10 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-export default connect(mapStateToProps, null)(Gallery)
+const mapDispatchToProps = (dispatch) => ({
+    showNotification: (message, isError) => {
+        dispatch(showNotification(message, isError));
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Gallery)

@@ -6,6 +6,7 @@ import SubscriptionDetail from './components/SubscriptionDetail'
 import "bulma/css/bulma.css"
 import cat from './components/cat.svg'
 import firebase from 'firebase'
+import Notification from './containers/Notification'
 import Authentication from './containers/Authentication'
 import {
   BrowserRouter as Router,
@@ -91,8 +92,10 @@ class App extends Component {
                         </div>
                     </div>
                 </section>*/}
+                  
           </div>
           {/*Add child component here*/}
+          <Notification />
           <Route exact path="/" component={Home} />
           <Route exact path="/subscription" component={Subscription} />
           <Route path="/subscription/:type" component={SubscriptionDetail} />

@@ -2,6 +2,10 @@ import { connect } from 'react-redux';
 import Authentication from '../components/Authentication';
 import { signInWithGoogle, signOut, showNotification } from '../actions';
 
+const mapStateToProps = (state, ownProps) => ({
+    connected: state.connected
+});
+
 const mapDispatchToProps = (dispatch) => {
     return {
         signInWithGoogle: (user) => {
@@ -16,6 +20,6 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(Authentication);

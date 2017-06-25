@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase'
+import {withRouter} from 'react-router-dom'
 import './css/authentication.css'
 const googleSignInProvider = new firebase.auth.GoogleAuthProvider();
 
@@ -53,7 +54,9 @@ class Authentication extends Component {
                 }
             }).then(() => {
                 this.props.showNotification('Goodbye!, We will not send any notification to disturb you :)')
-                this.auth.signOut()}
+                this.auth.signOut()
+                this.props.history.push('/');
+            }
             )
         // this.auth.signOut();
     }
@@ -160,10 +163,10 @@ class Authentication extends Component {
 
         return (
             <div className="nav-item is-tab">
-                {this.state.user ? SignOut : SignIn}
+                {this.props.connected ? (this.state.user ? SignOut : SignIn) : null }
             </div>
         );
     }
 }
 
-export default Authentication;
+export default withRouter(Authentication);

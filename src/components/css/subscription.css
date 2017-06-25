@@ -6,7 +6,7 @@ text-overlay {
     height: calc(100vh - 52px);
 }
 
-.subscription-item li {
+.subscription-item a {
     background: white;
     padding: 16px;
     list-style: none;    
@@ -19,13 +19,14 @@ text-overlay {
     text-align: center;
     text-transform: capitalize;
     cursor: pointer;
+    color: #000;
 }
 
-.subscription-item li:hover {
+/*.subscription-item li:hover {
     border-color: #00d1b2;
-}
+}*/
 
-.subscription-item li:hover a {
+.subscription-item a:hover {
     color: #00d1b2;
     border-color: #00d1b2;
 }
@@ -39,12 +40,12 @@ text-overlay {
         padding: 16px;
     }
     
-    .subscription-item li {
+    .subscription-item a {
         width: 100%;
         margin: 0;
     }
 
-    .subscription-item li+li {
+    .subscription-item a+a {
         margin-top: 16px;
     }
 }

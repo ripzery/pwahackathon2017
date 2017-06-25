@@ -39,7 +39,8 @@ class SubscribeDialog extends Component {
 
                 let val = snapshot.val()
 
-                if(val.tags.indexOf(tag) > -1){
+                let tagName = val.tags.map(tag => tag.tag);
+                if(tagName.indexOf(tag) > -1){
                     //TODO: show notification to user
                     this.props.showNotification('You\'ve already subscribed to ' + tag + ' 😙');
                     throw new Error('User has already been subscribed to ' + tag + '!');

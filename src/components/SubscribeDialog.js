@@ -99,12 +99,11 @@ class SubscribeDialog extends Component {
                         </p>
                     </section>
                     <footer className="modal-card-foot">
-                        <a className='button is-success' onClick={() => this.handleSubscribe(this.props.message.tag[0], this.props.message.imageUrl)}>I wanna see {this.props.message ? `${this.props.message.tag[0]}.` : ''}</a>
-                        <a className='button' onClick={() => this.handleSubscribe(this.props.message.tag[1], this.props.message.imageUrl)}>{this.props.message ? `No, see ${this.props.message.tag[1]} better!` : ''}</a>
+                        <a className='button is-primary' onClick={() => this.handleSubscribe(this.props.message.tag[0], this.props.message.imageUrl)}>I wanna see {this.props.message ? `${this.props.message.tag[0]}.` : ''}</a>
+                        <a className='button is-info' onClick={() => this.handleSubscribe(this.props.message.tag[1], this.props.message.imageUrl)}>{this.props.message ? `No, see ${this.props.message.tag[1]} better!` : ''}</a>
                         <a className='button' onClick={this.props.closeDialogHandler}>Nope</a>
                     </footer>
                 </div>
-                <button className="modal-close" onClick={this.props.closeDialogHandler}></button>
             </div>
         );
     }

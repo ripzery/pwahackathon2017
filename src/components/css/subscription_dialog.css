@@ -3,3 +3,17 @@
     font-size: 1.2rem;
     line-height: 1.2;
 }
+
+@media(max-width: 768px){
+    .modal-card-foot {
+        display: block;
+    }
+
+    .modal-card-foot .button {
+        width: 100%
+    }
+
+    .modal-card-foot .button+.button{
+        margin-top: 8px
+    }
+}

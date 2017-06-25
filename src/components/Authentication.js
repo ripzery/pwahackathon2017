@@ -35,6 +35,7 @@ class Authentication extends Component {
                 let tags = snapshot.val();
                 return tags
             }).then((tags) => {
+                if(!tags) return;
                 for (let i = 0; i < tags.length; i++) {
                     fetch(`https://iid.googleapis.com/iid/v1:batchRemove`, {
                         method: 'POST',
@@ -43,7 +44,7 @@ class Authentication extends Component {
                             'Authorization': `key=${AUTHORIZATION_KEY}`
                         }),
                         body: JSON.stringify({
-                            to: `/topics/${tags[i]}`,
+                            to: `/topics/${tags[i].tag}`,
                             registration_tokens: [localStorage.getItem('fcm_token')]
                         })
                     }).then(resp => {
@@ -120,7 +121,7 @@ class Authentication extends Component {
                         }).then(resp => {
                             // TODO: Notify the user
                             if (resp.status === 200)
-                                console.log(`Subscribed to ${tag} successfully.`, resp)
+                                console.log(`Subscribed to ${tag.tag} successfully.`, resp)
                         })
                     }
                 }).then(() => {

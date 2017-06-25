@@ -8,6 +8,7 @@ import cat from './components/cat.svg'
 import firebase from 'firebase'
 import Notification from './containers/Notification'
 import Authentication from './containers/Authentication'
+import "./components/css/toolbar.css"
 import {
   BrowserRouter as Router,
   Route,
@@ -29,29 +30,29 @@ class App extends Component {
     this.handleClickHamburger = this.handleClickHamburger.bind(this)
   }
 
-  handleClickAllPhotos(){
+  handleClickAllPhotos() {
     this.setState({
       route: '/',
       isHamburgerOpen: false
     })
   }
 
-  handleClickOnlySub(){
+  handleClickOnlySub() {
     this.setState({
       route: '/subscription',
       isHamburgerOpen: false
     })
   }
 
-  handleClickHamburger(){
+  handleClickHamburger() {
     console.log('click ham')
     this.setState({
       isHamburgerOpen: !this.state.isHamburgerOpen
     })
   }
 
-  update(){
-      this.forceUpdate()
+  update() {
+    this.forceUpdate()
   }
 
   render() {
@@ -62,7 +63,7 @@ class App extends Component {
     let hamburgerMenuClass = classNames({
       'nav-right nav-menu': true,
       'is-active': this.state.isHamburgerOpen
-    }) 
+    })
     let linkHomeClass = classNames({
       'nav-item is-tab is-hidden-mobile': true,
       'is-active': this.state.route == '/' || this.state.route == null
@@ -91,10 +92,10 @@ class App extends Component {
                     <figure className="image is-32x32">
                       <img src={cat} alt="Bulma logo" />
                     </figure>
-                    <h2 className="is-hidden-tablet" style={{marginLeft: 8}}><b>PhotoCats</b></h2>
+                    <h2 className="is-hidden-tablet" style={{ marginLeft: 8 }}><b>PhotoCats</b></h2>
                   </a>
                   <Link className={linkHomeClass} onClick={this.handleClickAllPhotos} to='/'>All Photos</Link>
-                  { firebase.auth().currentUser ? <Link className={linkSubscriptionClass} onClick={this.handleClickOnlySub} to='/subscription'>Only Subscriptions</Link> : null}
+                  {firebase.auth().currentUser ? <Link className={linkSubscriptionClass} onClick={this.handleClickOnlySub} to='/subscription'>Only Subscriptions</Link> : null}
                 </div>
                 <span className={hamburgerClass} onClick={this.handleClickHamburger}>
                   <span></span>
@@ -109,10 +110,12 @@ class App extends Component {
               </div>
             </nav>
           </div>
-          <Notification dialog={false}/>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/subscription" component={Subscription} />
-          <Route path="/subscription/:type" component={SubscriptionDetail} />
+          <div className="photo-cats-gallery">
+            <Notification dialog={false} />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/subscription" component={Subscription} />
+            <Route path="/subscription/:type" component={SubscriptionDetail} />
+          </div>
         </div>
       </Router>
     );

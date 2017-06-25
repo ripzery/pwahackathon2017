@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import "./css/notification.css";
 const classNames = require('classnames')
 // Receive props [message, isShow]
 class Notification extends Component {

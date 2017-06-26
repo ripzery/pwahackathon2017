@@ -3,7 +3,7 @@ A Web Application that collecting uploaded image from user and auto categorized 
 
 Autocats is heavily make use of Firebase, such as Realtime database, Storage, Authentication, Messaging, and Cloud Function.
 
-Cloud function is mainly used for *Reduce image size* and *Classify an image with Cloud Vision API*, it is triggered when image is uploaded.
+Cloud function is mainly used for **Reduce image size** and **Classify an image with Cloud Vision API**, it is triggered when image is uploaded.
 
 Autocats supports offline mode (Service Worker with Cache-First Strategy), so the client can see partial of the page when offline. When the client become online, the content will be loaded automatically.
 

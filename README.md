@@ -12,3 +12,4 @@ Autocats supports offline mode (Service Worker with Cache-First Strategy), so th
 https://pwa-hackathon-2017.firebaseapp.com/
 
 # Lighthouse score
+![Lighthouse score](https://github.com/ripzery/pwahackathon2017/blob/master/lighthouse-score.png)
